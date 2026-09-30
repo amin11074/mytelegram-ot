@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ثبت کلاس</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body { font-family: Tahoma; padding: 20px; background: #1a1a2e; color: #fff; }
+        input, select { width: 100%; padding: 10px; margin: 8px 0; border-radius: 8px; border: none; }
+        button { width: 100%; padding: 14px; background: #6c5ce7; color: white; border: none; border-radius: 8px; font-size: 16px; margin-top: 10px; }
+        label { display: block; margin-top: 10px; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <h2>📝 ثبت کلاس جدید</h2>
+    
+    <label>نام درس:</label>
+    <input type="text" id="className" placeholder="مثلاً ریاضی ۲">
+    
+    <label>نام استاد:</label>
+    <input type="text" id="teacherName" placeholder="مثلاً دکتر احمدی">
+    
+    <label>روز هفته:</label>
+    <select id="dayOfWeek">
+        <option value="شنبه">شنبه</option>
+        <option value="یکشنبه">یکشنبه</option>
+        <option value="دوشنبه">دوشنبه</option>
+        <option value="سه‌شنبه">سه‌شنبه</option>
+        <option value="چهارشنبه">چهارشنبه</option>
+        <option value="پنج‌شنبه">پنج‌شنبه</option>
+        <option value="جمعه">جمعه</option>
+    </select>
+    
+    <label>ساعت شروع:</label>
+    <input type="time" id="startTime">
+    
+    <label>ساعت پایان:</label>
+    <input type="time" id="endTime">
+    
+    <label>مکان / لینک:</label>
+    <input type="text" id="location" placeholder="مثلاً کلاس ۲۰۳">
+    
+    <button onclick="submitForm()">✅ ثبت کلاس</button>
+    
+    <script>
+        Telegram.WebApp.ready();
+        Telegram.WebApp.expand();
+        
+        function submitForm() {
+            const data = {
+                className: document.getElementById("className").value,
+                teacherName: document.getElementById("teacherName").value,
+                dayOfWeek: document.getElementById("dayOfWeek").value,
+                startTime: document.getElementById("startTime").value,
+                endTime: document.getElementById("endTime").value,
+                location: document.getElementById("location").value
+            };
+            
+            // اعتبارسنجی ساده
+            if (!data.className || !data.teacherName || !data.startTime) {
+                alert("لطفاً فیلدهای ضروری رو پر کن!");
+                return;
+            }
+            
+            // ارسال داده به ربات
+            Telegram.WebApp.sendData(JSON.stringify(data));
+            Telegram.WebApp.close();
+        }
+    </script>
+</body>
+</html>
